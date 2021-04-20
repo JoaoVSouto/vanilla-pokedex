@@ -99,6 +99,19 @@
 
       return pokemonId;
     },
+    activateFavoriteButtons(favorites) {
+      const favoriteButtons = elements.pokemonsCards.map(pokemonCard =>
+        pokemonCard.querySelector('button')
+      );
+
+      favoriteButtons.forEach(favoriteButton => {
+        const { pokemonId } = favoriteButton.dataset;
+
+        if (favorites.includes(pokemonId)) {
+          this.activateRemoveFromFavoritesStyles(favoriteButton);
+        }
+      });
+    },
   };
 
   const utils = {
@@ -189,6 +202,7 @@
 
       pokemonsData.forEach(template.createPokemonCard);
       template.setFavoriteButtonsListener();
+      this.handleInitialFavorites();
     },
     async mountPokemonData(pokemonUrl) {
       const pokemonData = await services.fetch(pokemonUrl);
@@ -213,6 +227,10 @@
         services.addPokemonToFavorites(pokemonId);
         template.activateRemoveFromFavoritesStyles(favoriteButton);
       }
+    },
+    handleInitialFavorites() {
+      const favorites = services.fetchFavoritesPokemons();
+      template.activateFavoriteButtons(favorites);
     },
   };
 
