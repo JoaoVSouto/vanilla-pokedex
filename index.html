@@ -26,13 +26,13 @@
     <div class="page-wrapper with-navbar">
       <nav class="navbar">
         <div class="container">
-          <a href="#" class="navbar-brand">Pokédex</a>
+          <span class="navbar-brand">Pokédex</span>
           <ul class="navbar-nav d-none d-md-flex">
             <li class="nav-item active">
-              <a href="#" class="nav-link">List</a>
+              <button type="button" class="nav-link border-0">List</button>
             </li>
             <li class="nav-item">
-              <a href="#" class="nav-link">Favorites</a>
+              <button type="button" class="nav-link border-0">Favorites</button>
             </li>
           </ul>
           <div class="navbar-content ml-auto">
@@ -58,8 +58,18 @@
                 class="dropdown-menu dropdown-menu-right w-200"
                 aria-labelledby="navbar-dropdown-toggle-btn-1"
               >
-                <a href="#" class="dropdown-item">List</a>
-                <a href="#" class="dropdown-item">Favorites</a>
+                <button
+                  type="button"
+                  class="dropdown-item border-0 text-left w-full cursor-pointer"
+                >
+                  List
+                </button>
+                <button
+                  type="button"
+                  class="dropdown-item border-0 text-left w-full cursor-pointer"
+                >
+                  Favorites
+                </button>
               </div>
             </div>
           </div>

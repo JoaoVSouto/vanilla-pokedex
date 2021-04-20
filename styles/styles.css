@@ -9,3 +9,7 @@
 .type-badge {
   line-height: normal;
 }
+
+.cursor-pointer {
+  cursor: pointer;
+}
