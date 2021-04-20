@@ -1,56 +1,103 @@
 (function () {
   const elements = {
     pokemonsContainer: document.getElementById('pokemons-container'),
+    pokemonsCards: [],
+  };
+
+  const constants = {
+    FAVORITES_POKEMONS_LOCAL_STORAGE_KEY: 'pokedex:favorites',
+    ADD_TO_FAVORITES_LABEL: 'Add to Favorites',
+    REMOVE_FROM_FAVORITES_LABEL: 'Remove from Favorites',
   };
 
   const template = {
-    createPokemonCard({ name, height, weight, types, imageUrl }) {
+    createPokemonCard({ id, name, height, weight, types, imageUrl }) {
       const cardTemplate = `
-        <div class="col-12 col-md-6 col-lg-4 col-xl-3 d-flex">
-          <div class="mw-full d-flex">
-            <div class="card p-0 d-flex flex-column">
-              <img
-                src="${imageUrl}"
-                class="img-fluid p-15 mx-auto d-block poke-img"
-                alt="${name}"
-              />
-              <div class="content flex-grow-1 d-flex flex-column">
-                <h2 class="content-title">${name}</h2>
+        <div class="mw-full d-flex">
+          <div class="card p-0 d-flex flex-column">
+            <img
+              src="${imageUrl}"
+              class="img-fluid p-15 mx-auto d-block poke-img"
+              alt="${name}"
+            />
+            <div class="content flex-grow-1 d-flex flex-column">
+              <h2 class="content-title">${name}</h2>
 
-                <div class="flex-grow-1">
-                  <p>
-                    <i class="fas fa-weight mr-5" aria-hidden="true"></i>
-                    Weight: ${weight}hg
-                  </p>
-                  <p>
-                    <i
-                      class="fas fa-level-up-alt mr-5"
-                      aria-hidden="true"
-                    ></i>
-                    Height: ${height}dm
-                  </p>
-                  <p class="d-flex align-items-center">
-                    <i class="fab fa-typo3 mr-5" aria-hidden="true"></i>
-                    Types:
-                    ${types.reduce(
-                      (acc, type) =>
-                        `${acc}<span class="badge ml-5">${type}</span>`,
-                      ''
-                    )}
-                  </p>
-                </div>
-
-                <button type="button" class="btn">
-                  Add to Favorites
-                  <i class="far fa-heart ml-5"></i>
-                </button>
+              <div class="flex-grow-1">
+                <p>
+                  <i class="fas fa-weight mr-5" aria-hidden="true"></i>
+                  Weight: ${weight}hg
+                </p>
+                <p>
+                  <i
+                    class="fas fa-level-up-alt mr-5"
+                    aria-hidden="true"
+                  ></i>
+                  Height: ${height}dm
+                </p>
+                <p class="d-flex align-items-center">
+                  <i class="fab fa-typo3 mr-5" aria-hidden="true"></i>
+                  Types:
+                  ${types.reduce(
+                    (acc, type) =>
+                      `${acc}<span class="badge ml-5">${type}</span>`,
+                    ''
+                  )}
+                </p>
               </div>
+
+              <button type="button" class="btn btn-favorite" data-pokemon-id="${id}">
+                <span>${constants.ADD_TO_FAVORITES_LABEL}</span>
+                <i class="far fa-heart ml-5"></i>
+              </button>
             </div>
           </div>
         </div>
       `;
 
-      elements.pokemonsContainer.insertAdjacentHTML('beforeend', cardTemplate);
+      const cardContainer = document.createElement('div');
+      cardContainer.className = 'col-12 col-md-6 col-lg-4 col-xl-3 d-flex';
+
+      cardContainer.insertAdjacentHTML('afterbegin', cardTemplate);
+
+      elements.pokemonsCards.push(cardContainer);
+
+      elements.pokemonsContainer.appendChild(cardContainer);
+    },
+    setFavoriteButtonsListener() {
+      elements.pokemonsCards.forEach(pokemonCard => {
+        const favoriteButton = pokemonCard.querySelector('button');
+
+        favoriteButton.addEventListener('click', () =>
+          controllers.handleToggleFavorite(favoriteButton)
+        );
+      });
+    },
+    isFavorited(favoriteButton) {
+      return favoriteButton.classList.contains('btn-danger');
+    },
+    activateAddToFavoritesStyles(favoriteButton) {
+      const favoriteButtonLabel = favoriteButton.querySelector('span');
+      const favoriteButtonIcon = favoriteButton.querySelector('i');
+
+      favoriteButton.classList.remove('btn-danger');
+      favoriteButtonLabel.textContent = constants.ADD_TO_FAVORITES_LABEL;
+      favoriteButtonIcon.classList.remove('fa');
+      favoriteButtonIcon.classList.add('far');
+    },
+    activateRemoveFromFavoritesStyles(favoriteButton) {
+      const favoriteButtonLabel = favoriteButton.querySelector('span');
+      const favoriteButtonIcon = favoriteButton.querySelector('i');
+
+      favoriteButton.classList.add('btn-danger');
+      favoriteButtonLabel.textContent = constants.REMOVE_FROM_FAVORITES_LABEL;
+      favoriteButtonIcon.classList.add('fa');
+      favoriteButtonIcon.classList.remove('far');
+    },
+    getPokemonIdFromButton(favoriteButton) {
+      const { pokemonId } = favoriteButton.dataset;
+
+      return pokemonId;
     },
   };
 
@@ -75,6 +122,61 @@
 
       return json;
     },
+    addPokemonToFavorites(pokemonId) {
+      const favorites =
+        JSON.parse(
+          localStorage.getItem(constants.FAVORITES_POKEMONS_LOCAL_STORAGE_KEY)
+        ) || [];
+
+      if (!Array.isArray(favorites)) {
+        localStorage.setItem(
+          constants.FAVORITES_POKEMONS_LOCAL_STORAGE_KEY,
+          JSON.stringify([pokemonId])
+        );
+        return;
+      }
+
+      favorites.push(pokemonId);
+      const favoritesWithoutDuplicates = new Set(favorites);
+      localStorage.setItem(
+        constants.FAVORITES_POKEMONS_LOCAL_STORAGE_KEY,
+        JSON.stringify(Array.from(favoritesWithoutDuplicates))
+      );
+    },
+    removePokemonFromFavorites(pokemonId) {
+      const favorites =
+        JSON.parse(
+          localStorage.getItem(constants.FAVORITES_POKEMONS_LOCAL_STORAGE_KEY)
+        ) || [];
+
+      if (!Array.isArray(favorites)) {
+        localStorage.setItem(
+          constants.FAVORITES_POKEMONS_LOCAL_STORAGE_KEY,
+          JSON.stringify([])
+        );
+        return;
+      }
+
+      const filteredFavorites = favorites.filter(
+        favorite => String(favorite) !== String(pokemonId)
+      );
+      localStorage.setItem(
+        constants.FAVORITES_POKEMONS_LOCAL_STORAGE_KEY,
+        JSON.stringify(filteredFavorites)
+      );
+    },
+    fetchFavoritesPokemons() {
+      const favorites =
+        JSON.parse(
+          localStorage.getItem(constants.FAVORITES_POKEMONS_LOCAL_STORAGE_KEY)
+        ) || [];
+
+      if (!Array.isArray(favorites)) {
+        return [];
+      }
+
+      return favorites;
+    },
   };
 
   const controllers = {
@@ -86,11 +188,13 @@
       );
 
       pokemonsData.forEach(template.createPokemonCard);
+      template.setFavoriteButtonsListener();
     },
     async mountPokemonData(pokemonUrl) {
       const pokemonData = await services.fetch(pokemonUrl);
 
       return {
+        id: pokemonData.id,
         name: utils.string.capitalize(pokemonData.name),
         height: pokemonData.height,
         weight: pokemonData.weight,
@@ -98,9 +202,24 @@
         types: pokemonData.types.map(({ type }) => type.name),
       };
     },
+    handleToggleFavorite(favoriteButton) {
+      const isFavorited = template.isFavorited(favoriteButton);
+      const pokemonId = template.getPokemonIdFromButton(favoriteButton);
+
+      if (isFavorited) {
+        services.removePokemonFromFavorites(pokemonId);
+        template.activateAddToFavoritesStyles(favoriteButton);
+      } else {
+        services.addPokemonToFavorites(pokemonId);
+        template.activateRemoveFromFavoritesStyles(favoriteButton);
+      }
+    },
   };
 
   controllers.init();
+
+  // TODO: remove
+  window.elements = elements;
 })();
 
 (function () {
