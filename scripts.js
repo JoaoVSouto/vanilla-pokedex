@@ -40,7 +40,7 @@
                   Types:
                   ${types.reduce(
                     (acc, type) =>
-                      `${acc}<span class="badge ml-5">${type}</span>`,
+                      `${acc}<span class="badge ml-5 type-badge">${type}</span>`,
                     ''
                   )}
                 </p>

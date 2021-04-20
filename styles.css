@@ -5,3 +5,7 @@
 .btn-favorite {
   min-width: 20rem;
 }
+
+.type-badge {
+  line-height: normal;
+}
