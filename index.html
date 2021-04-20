@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+      integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
+      crossorigin="anonymous"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/halfmoon@1.1.1/css/halfmoon.min.css"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="styles.css" />
+
+    <title>Pokédex</title>
+  </head>
+  <body>
+    <div class="page-wrapper with-navbar">
+      <nav class="navbar">
+        <div class="container">
+          <a href="#" class="navbar-brand">Pokédex</a>
+          <ul class="navbar-nav d-none d-md-flex">
+            <li class="nav-item active">
+              <a href="#" class="nav-link">List</a>
+            </li>
+            <li class="nav-item">
+              <a href="#" class="nav-link">Favorites</a>
+            </li>
+          </ul>
+          <div class="navbar-content ml-auto">
+            <button
+              id="darkmode-toggler"
+              class="btn btn-action mr-15 mr-md-0"
+              type="button"
+            >
+              <i class="far fa-moon"></i>
+            </button>
+            <div class="dropdown with-arrow d-md-none">
+              <button
+                class="btn"
+                data-toggle="dropdown"
+                type="button"
+                id="navbar-dropdown-toggle-btn-1"
+              >
+                Menu
+                <i class="fa fa-angle-down" aria-hidden="true"></i>
+              </button>
+              <div
+                class="dropdown-menu dropdown-menu-right w-200"
+                aria-labelledby="navbar-dropdown-toggle-btn-1"
+              >
+                <a href="#" class="dropdown-item">List</a>
+                <a href="#" class="dropdown-item">Favorites</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav>
+
+      <div class="content-wrapper">
+        <div class="container">
+          <div class="row">
+            <div class="col-12 col-md-6 col-lg-4 col-xl-3">
+              <div class="mw-full">
+                <div class="card p-0">
+                  <img
+                    src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png"
+                    class="img-fluid p-15 mx-auto d-block poke-img"
+                    alt="Bulbasaur"
+                  />
+                  <div class="content">
+                    <h2 class="content-title">Bulbasaur</h2>
+
+                    <div>
+                      <p>
+                        <i class="fas fa-weight mr-5" aria-hidden="true"></i>
+                        Weight: 30hg
+                      </p>
+                      <p>
+                        <i
+                          class="fas fa-level-up-alt mr-5"
+                          aria-hidden="true"
+                        ></i>
+                        Height: 44dm
+                      </p>
+                      <p>
+                        <i class="fab fa-typo3 mr-5" aria-hidden="true"></i>
+                        Types: grass, poison
+                      </p>
+                    </div>
+
+                    <button type="button" class="btn">
+                      Add to Favorites
+                      <i class="far fa-heart ml-5"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-4 col-xl-3">
+              <div class="mw-full">
+                <div class="card p-0">
+                  <img
+                    src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/2.png"
+                    class="img-fluid p-15 mx-auto d-block poke-img"
+                    alt="Ivysaur"
+                  />
+                  <div class="content">
+                    <h2 class="content-title">Ivysaur</h2>
+
+                    <div>
+                      <p>
+                        <i class="fas fa-weight mr-5" aria-hidden="true"></i>
+                        Weight: 30hg
+                      </p>
+                      <p>
+                        <i
+                          class="fas fa-level-up-alt mr-5"
+                          aria-hidden="true"
+                        ></i>
+                        Height: 44dm
+                      </p>
+                      <p>
+                        <i class="fab fa-typo3 mr-5" aria-hidden="true"></i>
+                        Types: grass, poison
+                      </p>
+                    </div>
+
+                    <button type="button" class="btn">
+                      Add to Favorites
+                      <i class="far fa-heart ml-5"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-4 col-xl-3">
+              <div class="mw-full">
+                <div class="card p-0">
+                  <img
+                    src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png"
+                    class="img-fluid p-15 mx-auto d-block poke-img"
+                    alt="Bulbasaur"
+                  />
+                  <div class="content">
+                    <h2 class="content-title">Bulbasaur</h2>
+
+                    <div>
+                      <p>
+                        <i class="fas fa-weight mr-5" aria-hidden="true"></i>
+                        Weight: 30hg
+                      </p>
+                      <p>
+                        <i
+                          class="fas fa-level-up-alt mr-5"
+                          aria-hidden="true"
+                        ></i>
+                        Height: 44dm
+                      </p>
+                      <p>
+                        <i class="fab fa-typo3 mr-5" aria-hidden="true"></i>
+                        Types: grass, poison
+                      </p>
+                    </div>
+
+                    <button type="button" class="btn">
+                      Add to Favorites
+                      <i class="far fa-heart ml-5"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-4 col-xl-3">
+              <div class="mw-full">
+                <div class="card p-0">
+                  <img
+                    src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png"
+                    class="img-fluid p-15 mx-auto d-block poke-img"
+                    alt="Bulbasaur"
+                  />
+                  <div class="content">
+                    <h2 class="content-title">Bulbasaur</h2>
+
+                    <div>
+                      <p>
+                        <i class="fas fa-weight mr-5" aria-hidden="true"></i>
+                        Weight: 30hg
+                      </p>
+                      <p>
+                        <i
+                          class="fas fa-level-up-alt mr-5"
+                          aria-hidden="true"
+                        ></i>
+                        Height: 44dm
+                      </p>
+                      <p>
+                        <i class="fab fa-typo3 mr-5" aria-hidden="true"></i>
+                        Types: grass, poison
+                      </p>
+                    </div>
+
+                    <button type="button" class="btn">
+                      Add to Favorites
+                      <i class="far fa-heart ml-5"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-4 col-xl-3">
+              <div class="mw-full">
+                <div class="card p-0">
+                  <img
+                    src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png"
+                    class="img-fluid p-15 mx-auto d-block poke-img"
+                    alt="Bulbasaur"
+                  />
+                  <div class="content">
+                    <h2 class="content-title">Bulbasaur</h2>
+
+                    <div>
+                      <p>
+                        <i class="fas fa-weight mr-5" aria-hidden="true"></i>
+                        Weight: 30hg
+                      </p>
+                      <p>
+                        <i
+                          class="fas fa-level-up-alt mr-5"
+                          aria-hidden="true"
+                        ></i>
+                        Height: 44dm
+                      </p>
+                      <p>
+                        <i class="fab fa-typo3 mr-5" aria-hidden="true"></i>
+                        Types: grass, poison
+                      </p>
+                    </div>
+
+                    <button type="button" class="btn">
+                      Add to Favorites
+                      <i class="far fa-heart ml-5"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-4 col-xl-3">
+              <div class="mw-full">
+                <div class="card p-0">
+                  <img
+                    src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png"
+                    class="img-fluid p-15 mx-auto d-block poke-img"
+                    alt="Bulbasaur"
+                  />
+                  <div class="content">
+                    <h2 class="content-title">Bulbasaur</h2>
+
+                    <div>
+                      <p>
+                        <i class="fas fa-weight mr-5" aria-hidden="true"></i>
+                        Weight: 30hg
+                      </p>
+                      <p>
+                        <i
+                          class="fas fa-level-up-alt mr-5"
+                          aria-hidden="true"
+                        ></i>
+                        Height: 44dm
+                      </p>
+                      <p>
+                        <i class="fab fa-typo3 mr-5" aria-hidden="true"></i>
+                        Types: grass, poison
+                      </p>
+                    </div>
+
+                    <button type="button" class="btn">
+                      Add to Favorites
+                      <i class="far fa-heart ml-5"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-4 col-xl-3">
+              <div class="mw-full">
+                <div class="card p-0">
+                  <img
+                    src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png"
+                    class="img-fluid p-15 mx-auto d-block poke-img"
+                    alt="Bulbasaur"
+                  />
+                  <div class="content">
+                    <h2 class="content-title">Bulbasaur</h2>
+
+                    <div>
+                      <p>
+                        <i class="fas fa-weight mr-5" aria-hidden="true"></i>
+                        Weight: 30hg
+                      </p>
+                      <p>
+                        <i
+                          class="fas fa-level-up-alt mr-5"
+                          aria-hidden="true"
+                        ></i>
+                        Height: 44dm
+                      </p>
+                      <p>
+                        <i class="fab fa-typo3 mr-5" aria-hidden="true"></i>
+                        Types: grass, poison
+                      </p>
+                    </div>
+
+                    <button type="button" class="btn">
+                      Add to Favorites
+                      <i class="far fa-heart ml-5"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/halfmoon@1.1.1/js/halfmoon.min.js"></script>
+
+    <script src="scripts.js"></script>
+  </body>
+</html>
