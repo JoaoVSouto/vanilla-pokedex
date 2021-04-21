@@ -28,6 +28,7 @@
 
   const elements = {
     pokemonsContainer: document.getElementById('pokemons-container'),
+    listLoading: document.getElementById('list-loading'),
     favoritesPokemonsContainer: document.getElementById(
       'favorites-pokemons-container'
     ),
@@ -256,6 +257,10 @@
         elements.favoritesChart.update();
       });
     },
+    hideListLoading() {
+      elements.listLoading.classList.remove('d-flex');
+      elements.listLoading.classList.add('d-none');
+    },
   };
 
   const models = {
@@ -362,6 +367,8 @@
       const pokemonsData = await Promise.all(
         pokemons.results.map(pokemon => this.mountPokemonData(pokemon.url))
       );
+
+      template.hideListLoading();
 
       models.pokemon.setData(pokemonsData);
 
