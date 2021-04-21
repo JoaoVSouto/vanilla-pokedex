@@ -223,6 +223,17 @@
 
       elements.favoritesChart.update();
     },
+    setDarkModeChangeListener() {
+      document.body.addEventListener('darkModeChange', () => {
+        if (halfmoon.darkModeOn) {
+          Chart.defaults.color = '#fff';
+        } else {
+          Chart.defaults.color = '#666';
+        }
+
+        elements.favoritesChart.update();
+      });
+    },
   };
 
   const models = {
@@ -335,8 +346,11 @@
       pokemonsData.forEach(template.createPokemonCard);
 
       template.setFavoriteButtonsListener();
+      template.setDarkModeChangeListener();
       this.handleInitialFavorites();
       this.fillFavoritePokemonCards();
+
+      document.body.dispatchEvent(new Event('darkModeChange'));
     },
     async mountPokemonData(pokemonUrl) {
       const pokemonData = await services.fetch(pokemonUrl);
@@ -436,6 +450,8 @@
     } else {
       setSunIcon();
     }
+
+    document.body.dispatchEvent(new Event('darkModeChange'));
   });
 
   const darkModeSelection = localStorage.getItem(DARK_MODE_LOCAL_STORAGE_KEY);
