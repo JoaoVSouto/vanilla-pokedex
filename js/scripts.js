@@ -119,10 +119,10 @@
 
       elements.pokemonsContainer.appendChild(cardContainer);
     },
-    createFavoritePokemonCard({ name, avatarUrl }) {
+    createFavoritePokemonCard({ id, name, avatarUrl }) {
       const cardTemplate = `
         <p
-          class="shadow-sm border rounded d-flex justify-content-between align-items-center h-75 pl-20 mr-10"
+          class="flex-grow-1 shadow-sm border rounded d-flex justify-content-between align-items-center h-75 pl-20 mr-10"
         >
           ${name}
           <img
@@ -130,11 +130,24 @@
             alt="${name}"
           />
         </p>
+        <button type="button" data-pokemon-id="${id}" title="Remove ${name} from favorites" class="btn btn-square btn-danger rounded-circle mr-10">
+          <i class="fas fa-trash-alt"></i>
+        </button>
       `;
 
-      elements.favoritesPokemonsContainer.insertAdjacentHTML(
-        'beforeend',
-        cardTemplate
+      const cardContainer = document.createElement('div');
+      cardContainer.className = 'd-flex align-items-center';
+      cardContainer.insertAdjacentHTML('afterbegin', cardTemplate);
+
+      const removeButton = cardContainer.querySelector('button');
+
+      elements.favoritesPokemonsContainer.appendChild(cardContainer);
+
+      template.setRemoveFromFavoritesListener(removeButton);
+    },
+    setRemoveFromFavoritesListener(removeButton) {
+      removeButton.addEventListener('click', () =>
+        controllers.handleRemoveFavorite(removeButton)
       );
     },
     addNotFoundFavoritesPokemonsMessage() {
@@ -177,10 +190,17 @@
       favoriteButtonIcon.classList.add('fa');
       favoriteButtonIcon.classList.remove('far');
     },
-    getPokemonIdFromButton(favoriteButton) {
-      const { pokemonId } = favoriteButton.dataset;
+    getPokemonIdFromButton(button) {
+      const { pokemonId } = button.dataset;
 
       return pokemonId;
+    },
+    getFavoriteButtonFromPokemonId(pokemonId) {
+      const favoriteButton = elements.pokemonsCards
+        .map(pokemonCard => pokemonCard.querySelector('button'))
+        .find(favButton => favButton.dataset.pokemonId === pokemonId);
+
+      return favoriteButton;
     },
     activateFavoriteButtons(favorites) {
       const favoriteButtons = elements.pokemonsCards.map(pokemonCard =>
@@ -382,6 +402,13 @@
     handleInitialFavorites() {
       const favorites = services.fetchFavoritesPokemons();
       template.activateFavoriteButtons(favorites);
+    },
+    handleRemoveFavorite(removeButton) {
+      const pokemonId = template.getPokemonIdFromButton(removeButton);
+
+      const favoriteButton = template.getFavoriteButtonFromPokemonId(pokemonId);
+
+      this.handleToggleFavorite(favoriteButton);
     },
     fillFavoritePokemonCards() {
       template.clearFavoritePokemonCards();
