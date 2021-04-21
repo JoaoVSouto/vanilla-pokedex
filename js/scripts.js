@@ -74,6 +74,7 @@
               src="${imageUrl}"
               class="img-fluid p-15 mx-auto d-block poke-img"
               alt="${name}"
+              loading="lazy"
             />
             <div class="content flex-grow-1 d-flex flex-column">
               <h2 class="content-title">${name}</h2>
@@ -128,6 +129,7 @@
           <img
             src="${avatarUrl}"
             alt="${name}"
+            loading="lazy"
           />
         </p>
         <button type="button" data-pokemon-id="${id}" title="Remove ${name} from favorites" class="btn btn-square btn-danger rounded-circle mr-10">
