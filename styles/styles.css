@@ -17,3 +17,7 @@
 .h-75 {
   height: 7.5rem !important;
 }
+
+.h-max-300 {
+  max-height: 30rem !important;
+}
