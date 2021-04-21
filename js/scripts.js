@@ -1,26 +1,13 @@
 (function () {
-  const elements = {
-    pokemonsContainer: document.getElementById('pokemons-container'),
-    favoritesPokemonsContainer: document.getElementById(
-      'favorites-pokemons-container'
-    ),
-    favoritesChartCanvas: document.getElementById('favorites-chart'),
-    favoritesChart: new Chart(document.getElementById('favorites-chart'), {
+  const config = {
+    chart: {
       type: 'pie',
       data: {
         labels: [],
         datasets: [
           {
             data: [],
-            backgroundColor: [
-              'rgb(255, 99, 132)',
-              'rgb(255, 159, 64)',
-              'rgb(255, 205, 86)',
-              'rgb(75, 192, 192)',
-              'rgb(54, 162, 235)',
-              'rgb(153, 102, 255)',
-              'rgb(201, 203, 207)',
-            ],
+            backgroundColor: [],
           },
         ],
       },
@@ -36,7 +23,19 @@
           },
         },
       },
-    }),
+    },
+  };
+
+  const elements = {
+    pokemonsContainer: document.getElementById('pokemons-container'),
+    favoritesPokemonsContainer: document.getElementById(
+      'favorites-pokemons-container'
+    ),
+    favoritesChartCanvas: document.getElementById('favorites-chart'),
+    favoritesChart: new Chart(
+      document.getElementById('favorites-chart'),
+      config.chart
+    ),
     pokemonsCards: [],
   };
 
@@ -44,6 +43,26 @@
     FAVORITES_POKEMONS_LOCAL_STORAGE_KEY: 'pokedex:favorites',
     ADD_TO_FAVORITES_LABEL: 'Add to Favorites',
     REMOVE_FROM_FAVORITES_LABEL: 'Remove from Favorites',
+    POKEMONS_TYPES_COLORS: {
+      normal: '#A8A878',
+      fire: '#F08030',
+      fighting: '#C03028',
+      water: '#6890F0',
+      flying: '#A890F0',
+      grass: '#78C850',
+      poison: '#A040A0',
+      electric: '#F8D030',
+      ground: '#E0C068',
+      psychic: '#F85888',
+      rock: '#B8A038',
+      ice: '#98D8D8',
+      bug: '#A8B820',
+      dragon: '#7038F8',
+      ghost: '#705898',
+      dark: '#705848',
+      steel: '#B8B8D0',
+      fairy: '#EE99AC',
+    },
   };
 
   const template = {
@@ -188,6 +207,7 @@
       chartData.labels = [];
 
       chartData.datasets[0].data = [];
+      chartData.datasets[0].backgroundColor = [];
 
       elements.favoritesChart.update();
     },
@@ -197,6 +217,9 @@
       chartData.labels.push(type);
 
       chartData.datasets[0].data.push(quantity);
+      chartData.datasets[0].backgroundColor.push(
+        constants.POKEMONS_TYPES_COLORS[type]
+      );
 
       elements.favoritesChart.update();
     },
@@ -231,7 +254,7 @@
 
   const services = {
     async fetchPokemonsList() {
-      const data = await fetch('https://pokeapi.co/api/v2/pokemon?limit=36');
+      const data = await fetch('https://pokeapi.co/api/v2/pokemon?limit=100');
       const json = await data.json();
 
       return json;
