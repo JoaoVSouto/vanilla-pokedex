@@ -68,10 +68,12 @@
   };
 
   const template = {
-    createPokemonCard({ id, name, height, weight, types, imageUrl }) {
+    createPokemonCard({ id, name, height, weight, types, imageUrl }, index) {
       const cardTemplate = `
         <div class="mw-full d-flex">
-          <div class="card p-0 d-flex flex-column">
+          <div class="card poke-card p-0 d-flex flex-column" style="animation-delay: ${
+            index * 100 > 500 ? 500 : index * 100
+          }ms;">
             <img
               src="${imageUrl}"
               class="img-fluid p-15 mx-auto d-block poke-img"
