@@ -13,3 +13,7 @@
 .cursor-pointer {
   cursor: pointer;
 }
+
+.h-75 {
+  height: 7.5rem !important;
+}
