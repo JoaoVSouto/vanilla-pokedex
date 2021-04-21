@@ -29,6 +29,7 @@
   const elements = {
     pokemonsContainer: document.getElementById('pokemons-container'),
     listLoading: document.getElementById('list-loading'),
+    modalLoading: document.getElementById('modal-loading'),
     favoritesPokemonsContainer: document.getElementById(
       'favorites-pokemons-container'
     ),
@@ -261,6 +262,14 @@
       elements.listLoading.classList.remove('d-flex');
       elements.listLoading.classList.add('d-none');
     },
+    showModalLoading() {
+      this.hideFavoritesChart();
+    },
+    hideModalLoading() {
+      this.showFavoritesChart();
+      elements.modalLoading.classList.remove('d-flex');
+      elements.modalLoading.classList.add('d-none');
+    },
   };
 
   const models = {
@@ -362,12 +371,15 @@
 
   const controllers = {
     async init() {
+      template.showModalLoading();
+
       const pokemons = await services.fetchPokemonsList();
 
       const pokemonsData = await Promise.all(
         pokemons.results.map(pokemon => this.mountPokemonData(pokemon.url))
       );
 
+      template.hideModalLoading();
       template.hideListLoading();
 
       models.pokemon.setData(pokemonsData);
