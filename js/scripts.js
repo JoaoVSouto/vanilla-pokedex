@@ -4,6 +4,39 @@
     favoritesPokemonsContainer: document.getElementById(
       'favorites-pokemons-container'
     ),
+    favoritesChartCanvas: document.getElementById('favorites-chart'),
+    favoritesChart: new Chart(document.getElementById('favorites-chart'), {
+      type: 'pie',
+      data: {
+        labels: [],
+        datasets: [
+          {
+            data: [],
+            backgroundColor: [
+              'rgb(255, 99, 132)',
+              'rgb(255, 159, 64)',
+              'rgb(255, 205, 86)',
+              'rgb(75, 192, 192)',
+              'rgb(54, 162, 235)',
+              'rgb(153, 102, 255)',
+              'rgb(201, 203, 207)',
+            ],
+          },
+        ],
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: {
+            position: 'top',
+          },
+          title: {
+            display: true,
+            text: 'Favorited pokémons types',
+          },
+        },
+      },
+    }),
     pokemonsCards: [],
   };
 
@@ -142,6 +175,30 @@
           this.activateRemoveFromFavoritesStyles(favoriteButton);
         }
       });
+    },
+    hideFavoritesChart() {
+      elements.favoritesChartCanvas.style.display = 'none';
+    },
+    showFavoritesChart() {
+      elements.favoritesChartCanvas.style.display = 'block';
+    },
+    clearChartData() {
+      const chartData = elements.favoritesChart.data;
+
+      chartData.labels = [];
+
+      chartData.datasets[0].data = [];
+
+      elements.favoritesChart.update();
+    },
+    addDataToChart(type, quantity) {
+      const chartData = elements.favoritesChart.data;
+
+      chartData.labels.push(type);
+
+      chartData.datasets[0].data.push(quantity);
+
+      elements.favoritesChart.update();
     },
   };
 
@@ -291,10 +348,12 @@
     },
     fillFavoritePokemonCards() {
       template.clearFavoritePokemonCards();
+      template.clearChartData();
 
       const favorites = services.fetchFavoritesPokemons();
 
       if (favorites.length === 0) {
+        template.hideFavoritesChart();
         template.addNotFoundFavoritesPokemonsMessage();
         return;
       }
@@ -304,6 +363,24 @@
         models.pokemon.show(favorite)
       );
       favoritesPokemons.forEach(template.createFavoritePokemonCard);
+
+      const typesQuantity = favoritesPokemons.reduce((obj, pokemon) => {
+        pokemon.types.forEach(type => {
+          if (obj[type]) {
+            obj[type] = obj[type] + 1;
+            return;
+          }
+
+          obj[type] = 1;
+        });
+
+        return obj;
+      }, {});
+
+      template.showFavoritesChart();
+      Object.keys(typesQuantity).forEach(type => {
+        template.addDataToChart(type, typesQuantity[type]);
+      });
     },
   };
 
